@@ -31,3 +31,19 @@ body {
     text-wrap: balance;
   }
 }
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .c-sub-heading {
+    word-break: break-word;
+  }
+
+  .c-wrapper {
+    position: relative;
+  }
+}
