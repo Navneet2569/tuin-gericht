@@ -47,3 +47,11 @@ body {
     position: relative;
   }
 }
+
+/* styles/globals.css */
+/* styles/globals.css */
+body {
+  @apply bg-cover bg-center;
+  background-image: url("/Overons.webp"); /* Replace with your image URL */
+  background-attachment: fixed; /* Keeps the background fixed */
+}

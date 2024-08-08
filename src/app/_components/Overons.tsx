@@ -1,52 +1,64 @@
 // components/OverOns.tsx
 import React from "react";
+import Image from "next/image";
 
 const OverOns: React.FC = () => {
   return (
-    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
+    <div className="flex justify-center">
       <div
-        className="absolute inset-0"
+        className="w-[90%] max-w-full bg-cover bg-center  p-8"
         style={{
-          backgroundImage: "url('/path/to/your/background-image.jpg')",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
+          backgroundImage: "url(/Overons.webp)", // Replace with your image URL
         }}
       >
-        <div className="absolute inset-0 bg-black opacity-40"></div>
+        {/* Add your content here */}
+        <div className="flex justify-center items-center bg-cover bg-center bg-no-repeat">
+          <div className="flex flex-col items-center p-8 max-w-screen-lg mx-auto">
+            <div className="bg-transparent border-none rounded-none">
+              <h2 className="text-5xl font-bold mb-4">
+                Wat Tuingericht voor u kan betekenen
+              </h2>
+            </div>
+          </div>
+        </div>
+        {/*Inside component */}
+        {/* Inside box */}
+        <div className="flex justify-center items-center w-[98%] mx-auto bg-white p-6  shadow-lg">
+          {/* Add your content here */}
+          <div className="w-full max-w-full">
+            <div className="text-xl font-bold mb-5 mt-5">
+              <div className="text-green-500">
+                <p>Over ons</p>
+                <p>
+                  <br />
+                </p>
+              </div>
+            </div>
+            <p className="text-gray-600 text-xl">
+              Welkom bij Tuingericht, waar groen niet zomaar gras is, maar een
+              passie die bloeit in de vorm van prachtig onderhouden tuinen. Onze
+              missie is helder: jouw buitenruimte omtoveren tot een groen
+              paradijs waarvan je elke dag geniet. Laat jouw tuindromen
+              werkelijkheid worden met het gepassioneerde team van Tuingericht!
+            </p>
+            <div className="flex justify-center mt-5 mb-8">
+              <div
+                className="relative"
+                style={{ width: "225px", height: "200px" }}
+              >
+                <Image
+                  src="/Overons.webp"
+                  alt=""
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Inside box */}
       </div>
-
-      {/* Content Container */}
-      <div className="relative z-10 bg-white bg-opacity-95 p-8 shadow-lg max-w-4xl w-full mx-4">
-        {/* Sub-Heading */}
-        <div className="text-left mb-2">
-          <p className="text-2xl font-bold text-green-700">
-            Wat Tuingericht voor u kan betekenen
-          </p>
-        </div>
-
-        {/* Heading */}
-        <div className="text-left mb-4">
-          <p className="text-lg text-gray-800">
-            Welkom bij Tuingericht, waar groen niet zomaar gras is, maar een
-            passie die bloeit in de vorm van prachtig onderhouden tuinen. Onze
-            missie is helder: jouw buitenruimte omtoveren tot een groen paradijs
-            waarvan je elke dag geniet. Laat jouw tuindromen werkelijkheid
-            worden met het gepassioneerde team van Tuingericht!
-          </p>
-        </div>
-
-        {/* Image */}
-        <div className="flex justify-start">
-          <img
-            src="/path/to/your/image.jpg"
-            alt="Tuingericht team"
-            className="w-56 h-56 object-cover shadow-md"
-          />
-        </div>
-      </div>
-    </section>
+    </div>
   );
 };
 
