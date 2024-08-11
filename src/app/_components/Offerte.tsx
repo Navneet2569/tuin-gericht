@@ -1,51 +1,164 @@
-// components/FormSection.tsx
-import React from "react";
-import Image from "next/image";
+import { useState } from "react";
 
-const Offerte: React.FC = () => {
+export default function ContactForm() {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    information: "",
+    file: null,
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      file: e.target.files ? e.target.files[0] : null,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
   return (
-    <div className="relative w-full h-80 bg-white p-6 overflow-hidden">
-      {/* Fixed Image Container */}
-      <div className="absolute inset-0 overflow-hidden">
-        <Image
-          src="/Contact.jpg" // Replace with your image path
-          alt="Description of the image"
-          layout="fill" // Fill the container
-          objectFit="cover" // Cover the container, cropping if necessary
-          className="absolute inset-0" // Ensure it covers the full area
-        />
-      </div>
-      {/* Content */}
-      <div className="relative z-10 flex items-center justify-center">
-        <div className="p-6 w-full h-full flex items-center justify-center">
-          {/* Add any content you want here */}
+    <div
+      className="min-h-screen flex items-center justify-center bg-cover bg-center"
+      style={{
+        backgroundImage: "url('/Contact.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md max-w-lg w-full">
+        {/* Heading */}
+        <h2
+          className="text-3xl font-bold text-center mb-6 text-black"
+          style={{ fontFamily: "Arial, sans-serif" }}
+        >
+          Vraag hier uw offerte aan
+        </h2>
 
-          <div className="relative w-full h-80">
-            {/* Outer Box with Background Image */}
-            <div className="absolute inset-0">
-              <Image
-                src="/Contact.jpg" // Replace with your image path
-                alt="Background Image"
-                layout="fill"
-                objectFit="cover"
-                className="z-0"
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Voornaam
+              </label>
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                placeholder="Voornaam"
+                className="border border-gray-300 p-3 rounded w-full"
               />
             </div>
-
-            {/* Inner Box */}
-            <div className="relative z-10 p-6 bg-white bg-opacity-50 border border-white m-6">
-              {/* Content inside the transparent box */}
-              <div className="relative flex items-center justify-center h-full w-full">
-                <p className="text-center">Content goes here</p>
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Achternaam
+              </label>
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                placeholder="Achternaam"
+                className="border border-gray-300 p-3 rounded w-full"
+              />
             </div>
           </div>
-
-          {/* Add any content you want here */}
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email *
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email *"
+              className="border border-gray-300 p-3 rounded w-full"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Telefoonnummer *
+            </label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              placeholder="Telefoonnummer *"
+              className="border border-gray-300 p-3 rounded w-full"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Informatie
+            </label>
+            <textarea
+              name="information"
+              value={formData.information}
+              onChange={handleChange}
+              placeholder="Informatie"
+              className="border border-gray-300 p-3 rounded w-full"
+              rows={4}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Bestanden toevoegen
+            </label>
+            <div className="border border-gray-300 p-6 rounded text-center relative">
+              <input
+                type="file"
+                name="file"
+                onChange={handleFileChange}
+                className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-8 w-8 text-gray-500 mx-auto"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 15a4 4 0 104 4H7a4 4 0 01-4-4zm13-3V7a4 4 0 00-4-4 4 4 0 00-4 4v5m8 0H7m8 0a2 2 0 11-4 0m-4 0h8"
+                />
+              </svg>
+            </div>
+          </div>
+          <label className="flex items-start space-x-2 text-sm text-gray-700">
+            <input type="checkbox" className="h-4 w-4" />
+            <span>
+              Ik ga akkoord met de voorwaarden die zijn verstrekt door het
+              bedrijf. Door mijn telefoonnummer op te geven, stem ik in met het
+              ontvangen van sms-berichten van de onderneming.
+            </span>
+          </label>
+          <button
+            type="submit"
+            className="bg-green-600 text-white font-bold py-3 px-4 rounded w-full"
+          >
+            Versturen
+          </button>
+        </form>
       </div>
     </div>
   );
-};
-
-export default Offerte;
+}
