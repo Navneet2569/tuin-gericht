@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { db, storage } from "../firebaseConfig"; // Adjust the path as needed
+import { collection, addDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -7,7 +10,7 @@ export default function ContactForm() {
     email: "",
     phoneNumber: "",
     information: "",
-    file: null,
+    file: null as File | null,
   });
 
   const handleChange = (
@@ -17,15 +20,50 @@ export default function ContactForm() {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      file: e.target.files ? e.target.files[0] : null,
-    });
+    if (e.target.files && e.target.files[0]) {
+      setFormData({
+        ...formData,
+        file: e.target.files[0],
+      });
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const uploadFile = async (file: File) => {
+    const storageRef = ref(storage, `files/${file.name}`);
+    await uploadBytes(storageRef, file);
+    return getDownloadURL(storageRef);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
+
+    try {
+      let fileURL = null;
+      if (formData.file) {
+        fileURL = await uploadFile(formData.file);
+      }
+
+      const docRef = await addDoc(collection(db, "contacts"), {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phoneNumber: formData.phoneNumber,
+        information: formData.information,
+        file: fileURL,
+      });
+
+      console.log("Document written with ID: ", docRef.id);
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        information: "",
+        file: null,
+      });
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   };
 
   return (
@@ -38,7 +76,6 @@ export default function ContactForm() {
       }}
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md max-w-lg w-full">
-        {/* Heading */}
         <h2
           className="text-3xl font-bold text-center mb-6 text-black"
           style={{ fontFamily: "Arial, sans-serif" }}
